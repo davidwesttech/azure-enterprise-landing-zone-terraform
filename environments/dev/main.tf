@@ -71,3 +71,11 @@ module "network_peering" {
   hub_to_spoke_peering_name = "peer-hub-to-spoke-${var.environment}"
   spoke_to_hub_peering_name = "peer-spoke-to-hub-${var.environment}"
 }
+
+module "policy_assignments" {
+  source = "../../modules/policy_assignments"
+
+  subscription_id   = var.subscription_id
+  allowed_locations = [var.location]
+  required_tag_name = "environment"
+}
