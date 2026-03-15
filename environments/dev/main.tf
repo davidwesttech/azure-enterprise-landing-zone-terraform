@@ -14,3 +14,24 @@ module "logging" {
     owner       = "DavidWest"
   }
 }
+
+module "hub_network" {
+  source = "../../modules/hub_network"
+
+  location                        = var.location
+  environment                     = var.environment
+  resource_group_name             = "rg-platform-connectivity-${var.environment}"
+  vnet_name                       = "vnet-hub-${var.environment}"
+  vnet_address_space              = ["10.0.0.0/16"]
+  shared_services_subnet_name     = "snet-shared-services"
+  shared_services_subnet_prefixes = ["10.0.1.0/24"]
+  firewall_subnet_prefixes        = ["10.0.2.0/24"]
+  gateway_subnet_prefixes         = ["10.0.3.0/24"]
+
+  tags = {
+    environment = var.environment
+    workload    = "platform-connectivity"
+    project     = "azure-landing-zone"
+    owner       = "DavidWest"
+  }
+}
