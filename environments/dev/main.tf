@@ -56,3 +56,18 @@ module "spoke_network" {
     owner       = "DavidWest"
   }
 }
+
+module "network_peering" {
+  source = "../../modules/network_peering"
+
+  hub_vnet_name           = module.hub_network.hub_vnet_name
+  hub_resource_group_name = module.hub_network.resource_group_name
+  hub_vnet_id             = module.hub_network.hub_vnet_id
+
+  spoke_vnet_name           = module.spoke_network.spoke_vnet_name
+  spoke_resource_group_name = module.spoke_network.resource_group_name
+  spoke_vnet_id             = module.spoke_network.spoke_vnet_id
+
+  hub_to_spoke_peering_name = "peer-hub-to-spoke-${var.environment}"
+  spoke_to_hub_peering_name = "peer-spoke-to-hub-${var.environment}"
+}
