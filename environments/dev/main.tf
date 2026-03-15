@@ -89,3 +89,21 @@ module "role_assignments" {
   workload_resource_group_id = module.spoke_network.resource_group_id
   principal_object_id        = data.azurerm_client_config.current.object_id
 }
+
+module "workload_landing_zone" {
+  source = "../../modules/workload_landing_zone"
+
+  location             = var.location
+  environment          = var.environment
+  resource_group_name  = module.spoke_network.resource_group_name
+  storage_account_name = "stlzdev001westtech"
+  key_vault_name       = "kv-lz-dev-westtech"
+  tenant_id            = data.azurerm_client_config.current.tenant_id
+
+  tags = {
+    environment = var.environment
+    workload    = "application"
+    project     = "azure-landing-zone"
+    owner       = "DavidWest"
+  }
+}
