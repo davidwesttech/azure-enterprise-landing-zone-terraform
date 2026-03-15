@@ -35,3 +35,24 @@ module "hub_network" {
     owner       = "DavidWest"
   }
 }
+
+module "spoke_network" {
+  source = "../../modules/spoke_network"
+
+  location                          = var.location
+  environment                       = var.environment
+  resource_group_name               = "rg-workload-${var.environment}"
+  vnet_name                         = "vnet-spoke-${var.environment}"
+  vnet_address_space                = ["10.1.0.0/16"]
+  app_subnet_name                   = "snet-app"
+  app_subnet_prefixes               = ["10.1.1.0/24"]
+  private_endpoints_subnet_name     = "snet-private-endpoints"
+  private_endpoints_subnet_prefixes = ["10.1.2.0/24"]
+
+  tags = {
+    environment = var.environment
+    workload    = "application"
+    project     = "azure-landing-zone"
+    owner       = "DavidWest"
+  }
+}
