@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 module "logging" {
   source = "../../modules/logging"
 
@@ -78,4 +80,12 @@ module "policy_assignments" {
   subscription_id   = var.subscription_id
   allowed_locations = [var.location]
   required_tag_name = "environment"
+}
+
+module "role_assignments" {
+  source = "../../modules/role_assignments"
+
+  subscription_id            = var.subscription_id
+  workload_resource_group_id = module.spoke_network.resource_group_id
+  principal_object_id        = data.azurerm_client_config.current.object_id
 }
