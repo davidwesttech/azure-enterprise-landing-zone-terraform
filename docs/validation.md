@@ -96,4 +96,95 @@ Verify that Azure Policy assignments exist.
 Expected Policies
 
 • Allowed Locations
-• Require
+• Require Environment Tag
+
+Azure CLI command:
+
+```
+az policy assignment list --output table
+```
+
+---
+
+# RBAC Assignments
+
+Verify that RBAC role assignments were created.
+
+Expected Assignments
+
+• Reader role at the subscription scope
+• Contributor role at the workload resource group scope
+
+Azure CLI command:
+
+```
+az role assignment list --output table
+```
+
+---
+
+# Log Analytics Workspace
+
+Verify that the Log Analytics workspace was created.
+
+Expected Resource
+
+• law-lz-dev
+
+Azure CLI command:
+
+```
+az monitor log-analytics workspace list --output table
+```
+
+---
+
+# Workload Resources
+
+Verify that the sample workload resources exist.
+
+Expected Resources
+
+• Storage Account
+• Key Vault
+
+Azure CLI command:
+
+```
+az resource list --resource-group rg-workload-dev --output table
+```
+
+---
+
+# Terraform State Verification
+
+Confirm that Terraform state contains the deployed resources.
+
+```
+terraform state list
+```
+
+The output should include resources from the following modules:
+
+• logging
+• hub_network
+• spoke_network
+• network_peering
+• policy_assignments
+• role_assignments
+• workload_landing_zone
+
+---
+
+# Expected Architecture
+
+After deployment, the Azure environment should reflect the following architecture.
+
+• Governance layer with Azure Policy and RBAC
+• Platform management resources for centralized logging
+• Hub-and-spoke network topology
+• Workload resources deployed in the spoke network
+
+Refer to the architecture diagram for the full environment design.
+
+![Architecture](architecture.png)
