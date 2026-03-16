@@ -58,3 +58,4 @@ Detailed documentation is available in the /docs directory:
 • Deployment Guide
 • Design Decisions
 • Validation
+• Deployment Screenshots
